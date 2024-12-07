@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Koulen&display=swap"
+      rel="stylesheet"
+    />
+    <title>Booking Page</title>
+    <link rel="stylesheet" href="/static/booking.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main>
+        <div class="header">
+          <button onclick="history.back()">Kembali</button>
+        </div>
+        <div class="logo-list">
+          <img src="/static/booking-img/pssi-removebg-preview.png" />
+          <div class="title-wrapper">
+            <div class="title">STADION UTAMA GELORA BUNG KARNO</div>
+          </div>
+          <img class="timnas" src="/static/booking-img/timnas indonesia.png" />
+        </div>
+
+		<div class="match">
+			<div class="matcher">
+				<h1>{{ events["jam"] }}</h1>
+				<h1>{{ events["host"] }} vs {{ events["lawan"] }}</h1>
+				<h1>{{ events["tanggal"] }} {{ events["bulan"] }}</h1>
+			</div>
+		</div>
+
+        <div class="section">
+          <div class="grid">
+            <div class="card">
+              <h2>TRIBUN TIMUR</h2>
+              <div class="info-mini">
+                <p>Capacity: 5,000</p>
+                <span class="divider"></span>
+                <p>Available: 5,000</p>
+              </div>
+			  <button><a href="/payment/tribun-timur?id={{ events['id'] }}">Rp 150.000</a></button>
+            </div>
+            <div class="card">
+              <h2>TRIBUN BARAT</h2>
+              <div class="info-mini">
+                <p>Capacity: 5,000</p>
+                <span class="divider"></span>
+                <p>Available: 5,000</p>
+              </div>
+			  <button><a href="/payment/tribun-barat?id={{ events['id'] }}">Rp 150.000</a></button>
+            </div>
+            <div class="card">
+              <h2>SELATAN VVIP</h2>
+              <div class="info-mini">
+                <p>Capacity: 2,500</p>
+                <span class="divider"></span>
+                <p>Available: 2,500</p>
+              </div>
+			  <button><a href="/payment/selatan-vvip?id={{ events['id'] }}">Rp 300.000</a></button>
+            </div>
+            <div class="card">
+              <h2>UTARA VVIP</h2>
+              <div class="info-mini">
+                <p>Capacity: 2,500</p>
+                <span class="divider"></span>
+                <p>Available: 2,500</p>
+              </div>
+			  <button><a href="/payment/utara-vvip?id={{ events['id'] }}">Rp 300.000</a></button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
+

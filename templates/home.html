@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <title>Landing page</title>
+
+</head>
+<body>
+    <nav>
+        <div class="wrapper">
+            <div class="logo"><a href="">FTball</a></div>
+            <div class="menu">
+				{% if username == "" %}
+                <ul>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="#Register">Register</a></li>
+                </ul>
+				{% else %}
+				<ul>
+					<li class="none"><a>{{ username }}</a></li>
+                    <li><a href="/signout">Sign Out</a></li>
+				</ul>
+				{% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <div class="navbar nv2">
+            <div class="listnavbar2">
+                <ul>
+                    <li><a href="#buy"><img src="static/home-img/buy.png">Buy</a></li>
+                    <li><a href="#events"><img src="static/home-img/event.png">Events</a></li>
+                    <li><a href="/ticket"><img src="static/home-img/tiket.png">Your Ticket</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="wrapper">
+		<div class="event-list">
+		{% for item in events %}
+        <div class="Events" id="events">
+			<div class="events1">
+				<img src="static/home-img/event-{{item['id'] + 1}}.jpg">
+                
+                <div class="deskripsi">
+					<h4>{{ item["host"] }} VS {{ item["lawan"] }}</h4>
+					<h4><i class="fa-solid fa-calendar"></i> {{ item["hari"] }}, {{ item["tanggal"] }} {{ item["bulan"] }} 2024</h4>
+					<h4><i class="fa-solid fa-clock"></i>  Pukul: {{ item["jam"] }}</h4>
+                
+                    <div class="deskripsi2">
+						<p>{{ item["deskripsi"] }}</p>
+						<!-- <p>Kualifikasi Piala Dunia kali ini mempertemukan Indonesia dengan Bahrain dalam laga yang diprediksi penuh tensi dan antusiasme. Bermain di kandang sendiri, Timnas Indonesia mendapat dukungan penuh dari ribuan suporter Garuda yang siap menyemangati para pemain. Pertandingan ini jadi momen penting untuk melihat sejauh mana kemampuan Indonesia di kancah internasional. Dengan strategi dan kerja sama tim yang matang, mampukah mereka mengamankan kemenangan dan melangkah lebih dekat ke panggung Piala Dunia? Pertandingan ini pasti akan menyuguhkan aksi-aksi seru dan momen yang tak terlupakan.</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+		{% endfor %}
+		</div>
+    </div>
+
+    <div class="wrapper buy">
+        <div class="gambar">
+        <img src="static/home-img/timnas copy.png"/>
+        </div>
+        <div class="tombolgambar">
+        <button id="buy">Buy Ticket</button>
+        </div>
+    </div>
+
+	<div class="popup-items hidden">
+		<button class="btn-close"><i class="fa-solid fa-x"></i></button>
+		{% for item in events %}
+		{% if item["host"] == "Indonesia" %}
+		<div class="match">
+			<div class="matcher">
+			<div class="right-side">
+				<div class="country">
+					<h4>{{ item["host"] }}</h4>
+					<h4>{{ item["lawan"] }}</h4>
+				</div>
+			</div>
+
+			<div class="left-side">
+				<div class="info">
+					<p><i class="fa-solid fa-calendar"></i> {{ item["hari"] }}, {{ item["tanggal"] }}/{{ item["bulan"] }}</p>
+					<p><i class="fa-solid fa-clock"></i> {{ item["jam"] }}</p>
+				</div>
+			</div>
+			</div>
+			<a class="booking-btn" href="/bookings?id={{ item['id'] }}">Buy Ticket</a>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+
+    <footer>
+        <div class="hakcipta">
+        <p>&copy; 2024 FTball. All rights reserved</p>
+        </div>
+    </footer>
+</body>
+
+	<script>
+		const popup = document.querySelector(".popup-items")
+		const btnClose = document.querySelector(".btn-close")
+		const btnBuy = document.querySelector("#buy")
+
+		btnBuy.addEventListener("click", () => popup.classList.remove("hidden"))
+		btnClose.addEventListener("click", () => popup.classList.add("hidden"))
+	</script>
+
+
+</html>

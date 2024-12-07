@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Ticket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+25&family=Koulen&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='tiket.css') }}">
+</head>
+<body>
+    <button class="back" onclick="location.href = '/'">Kembali</button>
+    <div class="ticket-container">  
+    	<h1>KOLEKSIMU</h1>
+		
+		{% for item in ticket_order %}
+    	<div class="ticket">
+        	<div class="qr">
+            	<p class="scan">SCAN DI SINI</p>
+				<img src="{{ item['qrcode'] }}">
+        	</div>
+        	<div class="info">
+				<h2>{{ match[item["tiket_id"]]["host"] }} vs {{ match[item["tiket_id"]]["lawan"] }}</h2>
+                <div class="identitas">
+					<h3>{{ username.upper() }}</h3>
+                    <p class="location">Gelora Bung Karno</p>
+					<p class="date">{{ match[item["tiket_id"]]["hari"] }}, {{ match[item["tiket_id"]]["tanggal"] }}/{{ match[item["tiket_id"]]["bulan-int"] }}/2024</p>
+					<p class="tribun">{{ item["nama"].split()[0] }} <span class="tribun-name">{{ item["nama"].split()[1] }}</span></p>
+					<p class="time">{{ match[item["tiket_id"]]["jam"] }}</p>
+        		</div>
+        	</div>
+
+        </div>
+		{% endfor %}
+    </div>
+</body>
+</html>

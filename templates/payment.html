@@ -1,0 +1,143 @@
+<html>
+	<head>
+		<title>Payments</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="robots" content="index, follow">
+		<link rel="stylesheet" href="{{ url_for('static', filename='payment.css') }}">
+	</head>
+	<body>
+	<div class="upper">
+		<button class="back-btn" onclick="history.back()"><img src="/static/payments-icons/mingcute_left-fill.svg">Kembali</button>
+	</div>
+	
+	<main>
+		<div class="container">
+			<div class="lower">
+				<div class="left-side">
+					<div class="info-left">
+						<h1 class="info-title">Pembayaran</h1>
+					</div>
+					<div class="metode-bayar">
+						<h1 class="info-metode">Pilih Metode Pembayaran</h1>
+
+						<fieldset class="tipe-bayar">
+							<input type="radio" id="e-wallet" name="tipe-bayar" value="e-wallet" checked>
+							<label for="e-wallet" class="tipe">
+								<img src="/static/payments-icons/solar_wallet-bold.svg">
+								<p>E-Wallet</p>
+							</label>
+
+							<input type="radio" id="bank" name="tipe-bayar" value="bank">
+							<label for="bank" class="tipe">
+								<img src="/static/payments-icons/mingcute_bank-fill.svg">
+								<p>Bank</p>
+							</label>
+
+							<input type="radio" id="mitra" name="tipe-bayar" value="mitra">
+							<label for="mitra" class="tipe">
+								<img src="/static/payments-icons/mdi_cash.svg">
+								<p>Mitra</p>
+							</label>
+						</fieldset>
+
+						<div class="tipe-items">
+							<fieldset class="tipe-item e-wallet active">
+								<ul>
+									{% for item in jenis_pembayaran_e_wallet %}
+									<li>
+										<input type="radio" id="{{ item['nama'] }}" name="tipe-item" value="{{ item['nama'] }}">
+										<label for="{{ item['nama'] }}">
+											<img src="/static/payments-icons/{{ item['nama'] }}.{{ item['ext'] }}">
+											<p>{{ item['title'] }}</p>
+										</label>
+									</li>
+									{% endfor %}
+								</ul>
+							</fieldset>
+							
+							<fieldset class="tipe-item bank">
+								<ul>
+									{% for item in jenis_pembayaran_bank %}
+									<li>
+										<input type="radio" id="{{ item['nama'] }}" name="tipe-item" value="{{ item['nama'] }}">
+										<label for="{{ item['nama'] }}">
+											<img class="bank" src="/static/payments-icons/{{ item['nama'] }}.{{ item['ext'] }}">
+											<p>{{ item['nama'].title() }}</p>
+										</label>
+									</li>
+									{% endfor %}
+								</ul>
+							</fieldset>
+
+							<fieldset class="tipe-item mitra">
+								<ul>
+									{% for item in jenis_pembayaran_mitra %}
+									<li>
+										<input type="radio" id="{{ item['nama'] }}" name="tipe-item" value="{{ item['nama'] }}">
+										<label for="{{ item['nama'] }}">
+											<img src="/static/payments-icons/{{ item['nama'] }}.{{ item['ext'] }}">
+											<p>{{ item['nama'].title() }}</p>
+										</label>
+									</li>
+									{% endfor %}
+								</ul>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<div class="right-side">
+					<form class="detail-pembelian" method="post">
+						<h2 class="title-pembelian">Detail Pesanan</h2>
+						<span class="divider"></span>
+						<div class="detail-info">
+							<div class="item">
+								<label>Pertandingan: </label><p>{{ match["host"] }} vs {{ match["lawan"] }}</p>
+							</div>
+
+							<div class="item">
+								<label>Jenis Tiket: </label><p>{{ jenis_tiket }}</p>
+							</div>
+
+							<div class="item">
+								<label>Harga Tiket: </label><p>Rp. {{ "{:,.2f}".format(harga_ticket) }}</p>
+							</div>
+							
+							<div class="item">
+								<label>Jumlah Tiket: </label><p>{{ jumlah_tiket }}</p>
+							</div>
+							
+							<span class="divider long"></span>
+
+							<div class="item">
+								<label>Total Ticket: </label><p>Rp. {{ "{:,.2f}".format(totaL_tiket) }}</p>
+							</div>
+
+							<div class="item">
+								<label class="thin">Pajak <span class="info-mini">10% </span></label><p>RP. {{ "{:,.2f}".format(pajak ) }}</p>
+							</div>
+
+							<div class="item">
+								<label class="thin">Biaya Admin <span class="info-mini">1% </span></label><p>RP. {{ "{:,.2f}".format(biaya_admin) }}</p>
+							</div>
+
+							<span class="divider long"></span>
+
+							<div class="item">
+								<label>Total Keseluruhan: </label><p>Rp. {{ "{:,.2f}".format(total_keseluruhan) }}</p>
+							</div>
+
+							<span class="divider long"></span>
+
+						</div>
+
+						<div class="bottom-action" onclick="location.href = '/ticket/0'">
+							<button class="btn-pesan">Pesan</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</main>
+		<script src="{{ url_for('static', filename='payment.js') }}"></script>
+	</body>
+</html>

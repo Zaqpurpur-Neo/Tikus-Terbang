@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <form method="post" class="login-container">
+        <div class="logos">
+            <img src="https://kompaspedia.kompas.id/wp-content/uploads/2021/08/LOGO-PSSI.png" alt="PSSI Logo">
+            <img src="/static/login-img/logo_ttulisan_timnas_indo-removebg-preview.png" alt="Indonesia Logo">
+        </div>
+        
+		<h2>LOG IN</h2>
+        <input type="text" name="username" placeholder="Username or email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        
+		<a href="#" class="link">Forgot Password?</a>
+        <button class="btn" onclick="location.href = '/'">Log In</button>
+        <a href="#" class="link">Create account or Reset password</a>
+
+        <button class="google-btn" type="submit">
+            <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png" alt="Google Logo"> Sign in with Google
+        </button>
+    </form>
+</body>
+</html>
