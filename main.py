@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, redirect, send_file
 from io import BytesIO
-from fpdf import FPDF
+from fpdf import FPDF, XPos, YPos, Align
+
 import base64
 import qrcode
 import random
+import os
 app = Flask(__name__)
 
 user = {
@@ -231,25 +233,25 @@ def download():
     match = events[matchid]
 
     pdf = FPDF()
-    pdf.add_page()
-    pdf.write_html(f"""
-    <h1><b>Tiket FTBall</b></h1>
-    <section>
-        <h2><b>Informasi</b></h2>
-        <br>
 
-        <h4>Match: <b>{match["host"]} vs {match["lawan"]}</b></h4>
-        <h4>Nama: <b>{user}</b></h4>
-        <h4>Lokasi: <b>Gelora Bung Karno</b></h4>
-        <h4>Waktu: <b>{match["jam"]} WIB</b></h4>
-        <h4>Hari: <b>{match["hari"]}</b></h4>
-        <h4>Tanggal: <b>{match["tanggal"]} {match["bulan"]} 2024</b></h4>
-        <h4>Tempat Tribun: <b>{lokasi_name}</b></h4>
-    </section>
+    pdf.set_margin(0)
 
-    <br>
-    <br>
-    """, font_family="Helvetica")
+    if matchid == 1:
+        if lokasi == "tribun-timur" or lokasi == "tribun-barat": 
+            pdf.set_page_background("static/tiket-img/indo-laos.png")
+        else:
+            pdf.set_page_background("static/tiket-img/indo-laos-vvip.png")
+    elif matchid == 3:
+        if lokasi == "tribun-timur" or lokasi == "tribun-barat": 
+            pdf.set_page_background("static/tiket-img/indo-filipina.png")
+        else:
+            pdf.set_page_background("static/tiket-img/indo-filipina-vvip.png")
+
+    pdf.add_page(format=(2000/2, 647/2))
+    pdf.set_font("Helvetica", size=15, style='B')
+    pdf.set_font_size(60)
+    pdf.set_text_color(255, 255, 255)
+    pdf.text(text=lokasi_name, x=785, y=60)
     pdf.output("main.pdf")
 
     return send_file("main.pdf")
