@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, send_file
 from io import BytesIO
-from fpdf import FPDF, XPos, YPos, Align
 
 import base64
 import qrcode
@@ -225,36 +224,21 @@ def ticket():
 
 @app.route("/ticket-download")
 def download():
-    user = request.args.get("user", type=str)
     lokasi = request.args.get("lokasi", type=str)
     matchid = request.args.get("matchid", type=int)
 
     lokasi_name = tiket[lokasi]['nama']
-    match = events[matchid]
-
-    pdf = FPDF()
-
-    pdf.set_margin(0)
 
     if matchid == 1:
         if lokasi == "tribun-timur" or lokasi == "tribun-barat": 
-            pdf.set_page_background("static/tiket-img/indo-laos.png")
+            return send_file("static/tiket-img/indo-laos.pdf")
         else:
-            pdf.set_page_background("static/tiket-img/indo-laos-vvip.png")
+            return send_file("static/tiket-img/indo-laos-vvip.pdf")
     elif matchid == 3:
         if lokasi == "tribun-timur" or lokasi == "tribun-barat": 
-            pdf.set_page_background("static/tiket-img/indo-filipina.png")
+            return send_file("static/tiket-img/indo-filipina.pdf")
         else:
-            pdf.set_page_background("static/tiket-img/indo-filipina-vvip.png")
-
-    pdf.add_page(format=(2000/2, 647/2))
-    pdf.set_font("Helvetica", size=15, style='B')
-    pdf.set_font_size(60)
-    pdf.set_text_color(255, 255, 255)
-    pdf.text(text=lokasi_name, x=785, y=60)
-    pdf.output("main.pdf")
-
-    return send_file("main.pdf")
+            return send_file("static/tiket-img/indo-filipina-vvip.pdf")
 
 
 def generate_qrcode(data):
@@ -277,4 +261,5 @@ def generate_qrcode(data):
     return img_format
 
 
-app.run(debug=True, port=5000, host='0.0.0.0')
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
