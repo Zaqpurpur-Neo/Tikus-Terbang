@@ -201,13 +201,19 @@ def ticket():
 
     for i in range(len(ticket_order)):
         if ticket_order[i]["user"] == user["username"]:
-            username = user['username']
             lokasi = ticket_order[i]['lokasi_id']
             matchid = ticket_order[i]['tiket_id']
-            ticket_order[i]["qrcode"] = generate_qrcode(
-                    request.url_root +
-                    f"ticket-download?user={username}&lokasi={lokasi}&matchid={matchid}"
-            )
+
+            if matchid == 1:
+                if lokasi == "tribun-timur" or lokasi == "tribun-barat": 
+                    ticket_order[i]["qrcode"] = generate_qrcode("https://www.mediafire.com/file/w7t6rxo3ox7e1q2/indo-laos.pdf/file")
+                else:
+                    ticket_order[i]["qrcode"] = generate_qrcode("https://www.mediafire.com/file/j9ngodky8ba4uku/indo-laos-vvip.pdf/file")
+            elif matchid == 3:
+                if lokasi == "tribun-timur" or lokasi == "tribun-barat": 
+                    ticket_order[i]["qrcode"] = generate_qrcode("https://www.mediafire.com/file/airwmayhorbtqkx/indo-filipina.pdf/file")
+                else:
+                    ticket_order[i]["qrcode"] = generate_qrcode("https://www.mediafire.com/file/t8ilj75ryr297uj/indo-filipina-vvip.pdf/file")
 
             ticket_filter.append(ticket_order[i])
 
@@ -231,14 +237,14 @@ def download():
 
     if matchid == 1:
         if lokasi == "tribun-timur" or lokasi == "tribun-barat": 
-            return send_file("static/tiket-img/indo-laos.pdf")
+            return redirect("https://download1500.mediafire.com/ohmh61atz7yguwZSqn9fhnjP9dbdVZ4rS_DlCq8CF2cITlYkOFSihZQc4-gElp06BLVOK0zIcUjZ9IXU15l_HP-qoyca_E1ZBm7OaUFGZF13YtY7YnfHJUezLBxA167g1BfzOzG_gZpa3BtJvxItgyUoE1gkonCkM8RuVs-EICkHiyI/w7t6rxo3ox7e1q2/indo-laos.pdf")
         else:
-            return send_file("static/tiket-img/indo-laos-vvip.pdf")
+            return redirect("https://download1078.mediafire.com/lzop3pds8mjgZeVXZuuqBujOPpIf1j8WkOE0I9TopgpqWqqTGkESk5rml5SAo6DB4E9WAemGjxXM7QfpnXHOlTXkWq2i9iMXt5irs52_jhjYOe6Dic34Frhs1_7O2LDQhbrFlmJcppuyAs0hdxry2oudh3sA3FTl_Cq68NU64WAbm4A/j9ngodky8ba4uku/indo-laos-vvip.pdf")
     elif matchid == 3:
         if lokasi == "tribun-timur" or lokasi == "tribun-barat": 
-            return send_file("static/tiket-img/indo-filipina.pdf")
+            return redirect("https://download1500.mediafire.com/ctihr258eabg8cmaY40KB6yqrGdZ2Y79SjRvm3eKJ32Sw5FriuBX4PvBYZqPLndAb4jzNWwHGbQ8pkQiKatgUOZ8IM44jHcEbCkjJoo1RsSUixNGXzRe1x4CqsvatF31Alxah0YSoN1BIx67kdPdyZ7neCN-1Zhc4sZliNpQunxVeQI/airwmayhorbtqkx/indo-filipina.pdf")
         else:
-            return send_file("static/tiket-img/indo-filipina-vvip.pdf")
+            return redirect("https://download1336.mediafire.com/nd2xe93hx8kgQ_6as6whlaCN8EEHHZSx48WPp6jsY0kyUhZc1zahLyJxRjVZCcF6LID0wgaTbKTctiqkdBOawTpCXBGdrT767weTyZyft0NmtGpKT4vAZ0DFipaozjuShZkrO7ZbkI--mNbj9bRmqIZ-FElfkiBwbhCtyIuqkrkh-Rg/t8ilj75ryr297uj/indo-filipina-vvip.pdf")
 
 
 def generate_qrcode(data):
